@@ -9,7 +9,7 @@ class Settings(BaseSettings):
 
     s3_bucket: str = "fininsight-ai-document-442042537827-us-east-1-an"
     dynamodb_table: str = "customer-documents"
-
+    dynamodb_intake_table: str
     class Config:
         env_file = ".env"
 

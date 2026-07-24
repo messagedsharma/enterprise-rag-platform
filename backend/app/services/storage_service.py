@@ -4,7 +4,7 @@ from botocore.exceptions import BotoCoreError, ClientError
 from app.config.settings import settings
 
 
-class S3Service:
+class StorageService:
     def __init__(self) -> None:
         session = boto3.Session(
             profile_name=settings.aws_profile,
@@ -41,4 +41,4 @@ class S3Service:
             raise RuntimeError("Failed to upload document to S3") from exc
 
 
-s3_service = S3Service()
+storage_service = StorageService()
