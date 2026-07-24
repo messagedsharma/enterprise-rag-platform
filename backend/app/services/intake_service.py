@@ -23,14 +23,14 @@ class IntakeService:
         intake_repository.create_intake(
             intake_id=intake_id,
             file_name=file_name,
-            s3_key=object_key,
+            original_document_key=object_key,
         )
 
         return {
             "intake_id": intake_id,
             "file_name": file_name,
-            "status": "UPLOADED",
-            "s3_key": object_key,
+            "status": "IN_PROGRESS",
+            "original_document_key": object_key,
         }
 
     def get_intake(self, intake_id: str) -> dict | None:
@@ -46,16 +46,16 @@ class IntakeService:
             status=status,
         )
 
-    def update_classification(
-        self,
-        intake_id: str,
-        document_type: str,
-        confidence: float,
+    def update_analysis(
+            self,
+            intake_id:str,
+            analysis: dict,
+            extracted_text_key: str
     ) -> dict:
-        return intake_repository.update_classification(
-        intake_id=intake_id,
-        document_type=document_type,
-        confidence=confidence,
-    )
+        return intake_repository.update_analysis(
+            intake_id=intake_id,
+            analysis=analysis,
+            extracted_text_key=extracted_text_key,
+        )
 
 intake_service = IntakeService()

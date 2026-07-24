@@ -8,18 +8,36 @@ class BedrockService:
         if "annual financial report" in normalized_text:
             return {
                 "documentType": "ANNUAL_REPORT",
-                "confidence": 0.99,
+                "documentTypeConfidence": 0.99,
+                "customerName": None,
+                "customerNameConfidence": 0,
+                "financialYear": None,
+                "financialYearConfidence": 0,
+                "industry": None,
+                "industryConfidence": 0,
             }
 
         if "terms and conditions" in normalized_text:
             return {
                 "documentType": "TERMS_DOCUMENT",
-                "confidence": 0.95,
+                "documentTypeConfidence": 0.95,
+                "customerName": None,
+                "customerNameConfidence": 0,
+                "financialYear": None,
+                "financialYearConfidence": 0,
+                "industry": None,
+                "industryConfidence": 0,
             }
 
         return {
             "documentType": "UNKNOWN",
-            "confidence": 0.50,
+            "documentTypeConfidence": 0.50,
+            "customerName": None,
+            "customerNameConfidence": 0,
+            "financialYear": None,
+            "financialYearConfidence": 0,
+            "industry": None,
+            "industryConfidence": 0,
         }
 
 

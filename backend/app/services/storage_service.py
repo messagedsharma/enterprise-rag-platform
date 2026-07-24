@@ -40,5 +40,15 @@ class StorageService:
         except (BotoCoreError, ClientError) as exc:
             raise RuntimeError("Failed to upload document to S3") from exc
 
+    def upload_text(
+            self,
+            text: str,
+            object_key: str
+    ) -> None:
+        self.upload_file(
+            file_content=text.encode("utf-8"),
+            object_key=object_key,
+            content_type="text/plain; charset=utf-8"
+        )
 
 storage_service = StorageService()

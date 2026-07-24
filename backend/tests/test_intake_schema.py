@@ -8,8 +8,10 @@ class IntakeResponseTests(unittest.TestCase):
         response = IntakeResponse(
             intake_id="intake-123",
             file_name="annual-report.pdf",
-            status="UPLOADED",
-            s3_key="intake/intake-123/original/annual-report.pdf",
+            status="IN_PROGRESS",
+            original_document_key=(
+                "intake/intake-123/original/annual-report.pdf"
+            ),
         )
 
         self.assertEqual(
@@ -17,8 +19,10 @@ class IntakeResponseTests(unittest.TestCase):
             {
                 "intakeId": "intake-123",
                 "fileName": "annual-report.pdf",
-                "status": "UPLOADED",
-                "s3Key": "intake/intake-123/original/annual-report.pdf",
+                "status": "IN_PROGRESS",
+                "originalDocumentKey": (
+                    "intake/intake-123/original/annual-report.pdf"
+                ),
             },
         )
 
@@ -27,7 +31,9 @@ class IntakeResponseTests(unittest.TestCase):
             intakeId="intake-456",
             fileName="quarterly-report.pdf",
             status="Processing",
-            s3Key="intake/intake-456/original/quarterly-report.pdf",
+            originalDocumentKey=(
+                "intake/intake-456/original/quarterly-report.pdf"
+            ),
             createdAt="2026-07-24T05:07:08+00:00",
         )
 
@@ -39,8 +45,23 @@ class IntakeResponseTests(unittest.TestCase):
                 "intakeId": "intake-456",
                 "fileName": "quarterly-report.pdf",
                 "status": "Processing",
-                "s3Key": "intake/intake-456/original/quarterly-report.pdf",
+                "originalDocumentKey": (
+                    "intake/intake-456/original/quarterly-report.pdf"
+                ),
             },
+        )
+
+    def test_accepts_legacy_s3_key(self):
+        response = IntakeResponse(
+            intakeId="intake-legacy",
+            fileName="legacy.pdf",
+            status="UPLOADED",
+            s3Key="intake/intake-legacy/original/legacy.pdf",
+        )
+
+        self.assertEqual(
+            response.model_dump(by_alias=True)["originalDocumentKey"],
+            "intake/intake-legacy/original/legacy.pdf",
         )
 
 
